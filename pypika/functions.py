@@ -315,3 +315,6 @@ class NVL(Function):
     def __init__(self, condition, term, alias=None):
         super(NVL, self).__init__("NVL", condition, term, alias=alias)
 
+class ARRAY_CONTAINS(Function):
+    def __init__(self,collection,term,alias=None):
+        super(ARRAY_CONTAINS,self).__init__("ARRAY_CONTAINS",collection,term,alias=alias)
