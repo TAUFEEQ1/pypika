@@ -295,6 +295,11 @@ class IsNull(Function):
     def __init__(self, term, alias=None):
         super(IsNull, self).__init__("ISNULL", term, alias=alias)
 
+#Missing Functions
+class IsMissing(Function):
+    def __init__(self, term, alias=None):
+            super(IsMissing, self).__init__("IS MISSING", term, alias=alias)
+    
 
 class Coalesce(Function):
     def __init__(self, term, *default_values, **kwargs):
@@ -309,3 +314,4 @@ class IfNull(Function):
 class NVL(Function):
     def __init__(self, condition, term, alias=None):
         super(NVL, self).__init__("NVL", condition, term, alias=alias)
+
