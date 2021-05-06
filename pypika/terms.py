@@ -124,6 +124,10 @@ class Term(Node):
     def isnull(self) -> "NullCriterion":
         return NullCriterion(self)
 
+    def ismissing(self) -> "MissingCriterion":
+        return MissingCriterion(self)
+
+    
     def notnull(self) -> "Not":
         return self.isnull().negate()
 
