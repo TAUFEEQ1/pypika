@@ -939,6 +939,34 @@ class NullCriterion(Criterion):
         )
         return format_alias_sql(sql, self.alias, **kwargs)
 
+class MissingCriterion(Criterion):
+    def __init__(self, term: Term, alias: Optional[str] = None) -> None:
+        super().__init__(alias)
+        self.term = term
+
+    def nodes_(self) -> Iterator[NodeT]:
+        yield self
+        yield from self.term.nodes_()
+
+    @builder
+    def replace_table(self, current_table: Optional["Table"], new_table: Optional["Table"]) -> "MissingCriterion":
+        """
+        Replaces all occurrences of the specified table with the new table. Useful when reusing fields across queries.
+
+        :param current_table:
+            The table to be replaced.
+        :param new_table:
+            The table to replace with.
+        :return:
+            A copy of the criterion with the tables replaced.
+        """
+        self.term = self.term.replace_table(current_table, new_table)
+
+    def get_sql(self, with_alias: bool = False, **kwargs: Any) -> str:
+        sql = "{term} IS MISSING".format(
+            term=self.term.get_sql(**kwargs),
+        )
+        return format_alias_sql(sql, self.alias, **kwargs)
 
 class NotNullCriterion(NullCriterion):
     def get_sql(self, with_alias: bool = False, **kwargs: Any) -> str:
