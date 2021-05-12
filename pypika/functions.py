@@ -317,4 +317,5 @@ class NVL(Function):
 
 class ArrayContains(Function):
     def __init__(self,collection,term,alias=None):
+        collection = [x.replace("'",'"') for x in collection]
         super(ArrayContains,self).__init__("ARRAY_CONTAINS",collection,term,alias=alias)
